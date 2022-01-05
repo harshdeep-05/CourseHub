@@ -12,17 +12,18 @@ class Solution {
 public:
     ListNode* sortList(ListNode* head) {
         ListNode* temp=head;
-        priority_queue<int> p;
+        vector<int> p;
         while(temp)
         {
-            p.push(-temp->val);
+            p.push_back(temp->val);
             temp=temp->next;
         }
         temp=head;
-        while(p.size())
+        sort(p.begin(),p.end());
+        int i=0;
+        while(i<p.size())
         {
-            temp->val=-p.top();
-            p.pop();
+            temp->val=p[i++];
             temp=temp->next;
         }
         return head;
