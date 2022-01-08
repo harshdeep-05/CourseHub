@@ -12,14 +12,12 @@ class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
         if(!head || !head->next)return head;
-        ListNode* temp=head;
-        while(temp && temp->next)
-        {
-            //ListNode* temp=even->next;
-            swap(temp->next->val,temp->val);
-            
-            temp=temp->next->next;
-        }
-        return head;
+        
+        ListNode* temp=head->next;
+        
+        head->next=swapPairs(head->next->next);
+        temp->next=head;
+        
+        return temp;
     }
 };
