@@ -1,28 +1,34 @@
 class Solution {
 public:
     int maxDistToClosest(vector<int>& seats) {
-        vector<int> one;
-        for(int i=0;i<seats.size();i++)
+        int n=seats.size(),l=0,max_dist=0;
+        
+        for(int i=0;i<n;i++)
         {
-            if(seats[i]==1)one.push_back(i);
-        }
-        int s=one.size(),n=seats.size();
-        int index=0,max_dist=one[0];
-        for(int i=1;i<one.size();i++)
-        {
-            int closest_dist=(one[i]-one[i-1])/2;
-            if(closest_dist>max_dist)
+            if(seats[i]==1)l=0;
+            else
             {
-                max_dist=closest_dist;
-                index=(one[i]+one[i-1])/2;
+                l++;
+                max_dist=max(max_dist,(l+1)/2);
             }
         }
         
-        if(max_dist<n-one[s-1]){
-            max_dist=n-one[s-1]-1;
-            index=n;
+        for(int i=0;i<n;i++)
+        {
+            if(seats[i]==1)
+            {
+                max_dist=max(max_dist,i);
+                break;
+            }
         }
-        cout<<index<<" ";
+        for(int i=0;i<n;i++)
+        {
+            if(seats[n-i-1]==1)
+            {
+                max_dist=max(max_dist,i);
+                break;
+            }
+        }
         return max_dist;
     }
 };
