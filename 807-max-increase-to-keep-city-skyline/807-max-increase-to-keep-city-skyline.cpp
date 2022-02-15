@@ -1,23 +1,28 @@
 class Solution {
 public:
-    int n;
-    int solve(vector<vector<int>>& grid,int r,int c)
-    {
-        int a=0,b=0;
-        for(int i=0;i<n;i++)a=max(grid[r][i],a);
-        for(int i=0;i<n;i++)b=max(grid[i][c],b);
-        return min(a,b);
-    }
     int maxIncreaseKeepingSkyline(vector<vector<int>>& grid) {
-        n=grid.size();
+        int n=grid.size();
+        vector<int> r(n,0),c(n,0);
         int ans=0;
+        for(int i=0;i<n;i++)
+        {
+            int mx=0,mc=0;
+            for(int j=0;j<n;j++)
+            {
+                mx=max(grid[i][j],mx);
+                mc=max(grid[j][i],mc);
+            }
+            r[i]=mx;
+            c[i]=mc;
+        }
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<n;j++)
             {
-                ans+=solve(grid,i,j)-grid[i][j];
+                ans+=min(r[i],c[j])-grid[i][j];
             }
         }
+    
         return ans;
     }
 };
