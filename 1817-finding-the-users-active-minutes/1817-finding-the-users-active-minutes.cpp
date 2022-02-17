@@ -7,14 +7,9 @@ public:
         {
             m[i[0]].insert(i[1]);
         }
-        map<int,int> mp;
         for(auto i:m)
         {
-            mp[i.second.size()]++;
-        }
-        for(auto i:mp)
-        {
-            ans[i.first-1]=i.second;
+            ans[i.second.size()-1]++;
         }
         return ans;
     }
