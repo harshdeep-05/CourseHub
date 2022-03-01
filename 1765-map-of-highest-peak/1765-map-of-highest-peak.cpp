@@ -22,18 +22,18 @@ public:
             {
                 int x=q.front().first,y=q.front().second;
                 q.pop();
-                /*
+                
                 for(int r=0;r<4;r++)
                 {
-                    int X=x+d[r],Y=y+d[r];
+                    int X=x+d[r],Y=y+d[r+1];
                     if(X>=0 && X<m && Y>=0 && Y<n && isWater[X][Y]==-1)
                     {
                         isWater[X][Y]=mx+1;
                         q.push({X,Y});
                     }
                 }
-                */
                 
+                /*
                 if(x>0 && isWater[x-1][y]==-1)
                 {
                     isWater[x-1][y]=mx+1;
@@ -54,6 +54,7 @@ public:
                     isWater[x][y+1]=mx+1;
                     q.push({x,y+1});
                 }
+                */
                 
             }
             mx++;
