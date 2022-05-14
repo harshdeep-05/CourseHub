@@ -1,37 +1,29 @@
 class Solution {
 public:
-    
+    int ans=0;
+    vector<pair<int,int> > adj[101];
+    void dfs(int node,vector<int> &time,int curTime)
+    {
+        if(curTime>=time[node])return;
+        time[node]=curTime;
+        for(auto v:adj[node])
+        {
+            dfs(v.first,time,curTime+v.second);
+        }
+    }
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-        vector<vector<pair<int,int>>> adj(n+1);
-        for(auto i:times)
-        {
-            adj[i[0]].push_back({i[1],i[2]});
-        }
-        int ans=0;
-        vector<int> dist(n+1,INT_MAX);
-        queue<int> q;
-        q.push(k);
-        dist[k]=0;
-        while(!q.empty())
-        {
-            int u=q.front();
-            q.pop();
-            for(auto v:adj[u])
-            {
-                if(dist[v.first]>dist[u]+v.second)
-                {
-                    dist[v.first]=dist[u]+v.second;
-                    q.push(v.first);
-                }
-            }
-        }
-        for(int i=1;i<=n;i++)
-        {
-            if(dist[i]==INT_MAX)return -1;
-            ans=max(ans,dist[i]);
-        }
-            
-        return ans;
         
+        for(auto v:times)
+        {
+            adj[v[0]].push_back({v[1],v[2]});
+        }
+        for (int i = 1; i <= n; i++) {
+            sort(adj[i].begin(), adj[i].end());
+        }
+        vector<int> time(n+1,INT_MAX);
+        dfs(k,time,0);
+        ans=INT_MIN;
+        for(int i=1;i<=n;i++)ans=max(ans,time[i]);
+        return ans==INT_MAX?-1:ans;
     }
 };
