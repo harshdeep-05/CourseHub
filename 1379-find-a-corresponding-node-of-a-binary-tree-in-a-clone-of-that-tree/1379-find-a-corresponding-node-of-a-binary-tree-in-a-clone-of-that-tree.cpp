@@ -12,24 +12,27 @@ class Solution {
 public:
     TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
         queue<TreeNode*> q,p;
-        q.push(cloned);
-        p.push(original);
+        q.push(original);
+        p.push(cloned);
         while(!q.empty())
         {
             int s=q.size();
             while(s--)
             {
-                auto x=q.front();
+                auto a=q.front();
                 q.pop();
-                auto y=p.front();
+                auto b=p.front();
                 p.pop();
-                if(y==target)return x;
+                if(a==target)return b;
                 
-                if(x->left)q.push(x->left);
-                if(x->right)q.push(x->right);
-                
-                if(y->left)p.push(y->left);
-                if(y->right)p.push(y->right);
+                if(a->left){
+                    q.push(a->left);
+                    p.push(b->left);
+                }
+                if(a->right){
+                    q.push(a->right);
+                    p.push(b->right);
+                }
             }
         }
         return NULL;
