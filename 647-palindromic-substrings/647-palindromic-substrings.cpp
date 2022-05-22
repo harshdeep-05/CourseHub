@@ -1,20 +1,17 @@
 class Solution {
-public:  
-    
+public:
     void solve(string s,int i,int j,int &ans)
     {
-        if(s.size()==0 || i>j)return;
+        int cnt=0;
         while(i>=0 && j<s.size() && s[i]==s[j])
         {
             i--;
             j++;
-            ans++;
+            cnt++;
         }
+        ans+=cnt;
     }
-    
     int countSubstrings(string s) {
-        if(s.size()==0)return 0;
-        
         int ans=0;
         for(int i=0;i<s.size();i++)
         {
@@ -22,7 +19,5 @@ public:
             solve(s,i,i+1,ans);
         }
         return ans;
-        
-        
     }
 };
