@@ -1,8 +1,13 @@
 class Solution {
 public:
     bool isValid(string s) {
-        while(s.find("abc")!=-1)s.erase(s.find("abc"),3);
-        
-        return (s.size()==0);
+        int i=0,n=s.size();
+        for(int j=0;j<n;j++)
+        {
+            s[i++]=s[j];
+            if(i>=3 && s[i-1]=='c' && s[i-2]=='b' && s[i-3]=='a')i-=3;
+        }
+        return (i==0);
+    
     }
 };
