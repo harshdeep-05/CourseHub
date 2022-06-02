@@ -17,7 +17,7 @@ public:
                 vis[ans.back()-'a']=false;
                 ans.pop_back();
             }
-            ans.push_back(s[i]);
+            ans+=s[i];
             vis[s[i]-'a']=true;
         }
         return ans;
