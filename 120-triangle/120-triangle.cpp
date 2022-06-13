@@ -1,14 +1,14 @@
 class Solution {
 public:
-    int dp[201][201];
-    int solve(vector<vector<int>>& tri,int r,int c)
-    {
-        if(dp[r][c]!=-1)return dp[r][c];
-        if(r==tri.size() || c==tri[r].size())return 0;
-        return dp[r][c]=min(solve(tri,r+1,c),solve(tri,r+1,c+1))+tri[r][c];
-    }
-    int minimumTotal(vector<vector<int>>& triangle) {
-        memset(dp,-1,sizeof dp);
-        return solve(triangle,0,0);
+    int minimumTotal(vector<vector<int>>& t) {
+        int n=t.size();
+        for(int i=n-2;i>=0;i--)
+        {
+            for(int j=0;j<t[i].size();j++)
+            {
+                t[i][j]+=min(t[i+1][j],t[i+1][j+1]);
+            }
+        }
+        return t[0][0];
     }
 };
