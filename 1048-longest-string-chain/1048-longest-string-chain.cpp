@@ -2,22 +2,22 @@ class Solution {
 public:
     static bool yes(string a,string b)
     {
-        return a.size()<b.size();
+        return (a.size()<b.size());
     }
     int longestStrChain(vector<string>& words) {
         sort(words.begin(),words.end(),yes);
-        map<string,int> m;
+        unordered_map<string,int> m;
         int ans=0;
-        for(auto word:words)
+        for(auto s:words)
         {
-            int mx=0,n=word.size();
+            int n=s.size(),cur=0;
             for(int i=0;i<n;i++)
             {
-                string s=word.substr(0,i)+word.substr(i+1,n+1);
-                mx=max(mx,m[s]+1);
+                string temp=s.substr(0,i)+s.substr(i+1,n+1);
+                cur=max(cur,m[temp]+1);
             }
-            m[word]=mx;
-            ans=max(mx,ans);
+            m[s]=cur;
+            ans=max(ans,cur);
         }
         return ans;
     }
