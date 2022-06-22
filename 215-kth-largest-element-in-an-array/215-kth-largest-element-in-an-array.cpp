@@ -27,7 +27,20 @@ public:
             swap(a[i],a[index]);
         }
     }
-    
+    //inertion sort
+    void insertion_sort(vector<int> &nums)
+    {
+        int n=nums.size();
+        for(int i=1;i<n;i++)
+        {
+            int cur=nums[i],j=i-1;
+            while(j>=0 && nums[j]>cur){
+                nums[j+1]=nums[j];
+                j--;
+            }
+            nums[j+1]=cur;
+        }
+    }
     
     int findKthLargest(vector<int>& nums, int k) {
         
