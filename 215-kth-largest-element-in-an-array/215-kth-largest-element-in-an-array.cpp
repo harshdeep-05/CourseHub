@@ -46,8 +46,8 @@ public:
         
         int n=nums.size();
         //bubble_sort(nums);
-        selection_sort(nums);
-        
+        //selection_sort(nums);
+        insertion_sort(nums);
         return nums[n-k];
     }
 };
