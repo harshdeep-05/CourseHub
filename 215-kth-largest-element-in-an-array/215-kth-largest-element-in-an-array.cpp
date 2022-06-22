@@ -12,10 +12,29 @@ public:
             }
         }
     }
+    //selection sort
+    void selection_sort(vector<int> &a)
+    {
+        int n=a.size();
+        for(int i=0;i<n;i++)
+        {
+            int mi=a[i],index=i;
+            for(int j=i;j<n;j++)
+            {
+                mi=min(mi,a[j]);
+                if(mi==a[j])index=j;
+            }
+            swap(a[i],a[index]);
+        }
+    }
+    
     
     int findKthLargest(vector<int>& nums, int k) {
-        bubble_sort(nums);
+        
         int n=nums.size();
+        //bubble_sort(nums);
+        selection_sort(nums);
+        
         return nums[n-k];
     }
 };
