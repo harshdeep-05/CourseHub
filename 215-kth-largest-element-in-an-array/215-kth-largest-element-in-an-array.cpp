@@ -41,13 +41,67 @@ public:
             nums[j+1]=cur;
         }
     }
+    //Merge SOrt
+    void merge(vector<int> &arr,int l,int m,int r)
+    {
+        int Lsz = m-l+1 , Rsz = r-m;
+         int leftarr[Lsz] , rightarr[Rsz];
+         
+         for(int i = 0; i < Lsz; i++)
+            leftarr[i] = arr[l+i];
+         
+         for(int i = 0; i < Rsz; i++)
+            rightarr[i] = arr[m+1+i];
+         
+         int lptr = 0 , rptr = 0 , indx = l;
+         
+         while(lptr < Lsz && rptr < Rsz){
+             if(leftarr[lptr] < rightarr[rptr]){
+                 arr[indx] = leftarr[lptr];
+                 lptr++;
+             }
+             else{
+                 arr[indx] = rightarr[rptr];
+                 rptr++;
+             }
+             indx++;
+         }
+         
+         while(lptr < Lsz){
+             arr[indx] = leftarr[lptr];
+             lptr++;
+             indx++;
+         }
+         while(rptr < Rsz){
+             arr[indx] = rightarr[rptr];
+             rptr++;
+             indx++;
+         }
+    }
+    void merge_sort(vector<int> &v,int l,int r)
+    {
+        if(l>=r)return;
+        
+        int mid=l+(r-l)/2;
+        merge_sort(v,l,mid);
+        merge_sort(v,mid+1,r);
+        return merge(v,l,mid,r);
+        
+    }
     
+    void print(vector<int> &v)
+    {
+        for(auto i:v)cout<<i<<" ";
+        cout<<"\n";
+    }
     int findKthLargest(vector<int>& nums, int k) {
         
         int n=nums.size();
         //bubble_sort(nums);
         //selection_sort(nums);
-        insertion_sort(nums);
+        //insertion_sort(nums);
+        merge_sort(nums,0,n-1);
+        //print(nums);
         return nums[n-k];
     }
 };
