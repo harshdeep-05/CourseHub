@@ -27,7 +27,6 @@ public:
         for(auto node:root->children)
         {
             solve(node,ans);
-            
         }
         ans.push_back(root->val);
         return;
@@ -36,7 +35,25 @@ public:
     vector<int> postorder(Node* root) {
         vector<int> ans;
         if(!root)return ans;
-        solve(root,ans);
+        stack<Node*> s;
+        s.push(root);
+        while(!s.empty())
+        {
+            int n=s.size();
+            while(n--)
+            {
+                auto node=s.top();
+                s.pop();
+                ans.push_back(node->val);
+                for(auto v:node->children)
+                {
+                    s.push(v);
+                }
+                
+            }
+        }
+        //solve(root,ans);
+        reverse(begin(ans),end(ans));
         return ans;
     }
 };
