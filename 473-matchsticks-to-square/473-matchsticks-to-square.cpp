@@ -32,10 +32,10 @@ public:
         for(auto i:matchsticks)sum+=i;
         if(sum%4)return 0;
         int side=sum/4;
-        sort(begin(matchsticks),end(matchsticks));
+        //sort(begin(matchsticks),end(matchsticks));
         
         int k=4,n=matchsticks.size();
-        if(matchsticks[n-1]>side)return 0;
+        //if(matchsticks[n-1]>side)return 0;
         vector<bool> vis(n,0);
         return solve(matchsticks,0,vis,side,k,0);
     }
