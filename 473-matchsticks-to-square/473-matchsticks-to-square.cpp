@@ -1,34 +1,31 @@
 class Solution {
 public:
-     bool solve(vector<int> &nums,vector<bool> &visited,int index,int target,int k,int cur_sum)
+    bool solve(vector<int> &v,int idx,vector<bool> &vis,int target,int k,int cur)
     {
-        if(k==0)return 1;
-        if(visited[index]==true)
+        if(k==1)return 1;
+        if(vis[idx])
         {
-            if(index==nums.size()-1)
-                return false;
-            return solve(nums,visited,index+1,target,k,cur_sum);
+            if(idx==v.size()-1)return 0;
+            return solve(v,idx+1,vis,target,k,cur);
         }
         
-        visited[index]=true;
-        cur_sum+=nums[index];
+        vis[idx]=1;
+        cur+=v[idx];
         
-        if(cur_sum>target)return 0;
-        if(cur_sum==target)
-            return solve(nums,visited,0,target,k-1,0);
+        if(cur>target)return 0;
+        if(cur==target)return solve(v,0,vis,target,k-1,0);
         
-        for(int i=index+1;i<nums.size();i++)
+        for(int i=idx+1;i<v.size();i++)
         {
-            if(visited[i]==true)continue;
-            if(solve(nums,visited,i,target,k,cur_sum))
-                return true;
+            if(vis[i])continue;
             
-            visited[i]=0;
+            if(solve(v,i,vis,target,k,cur))
+                return 1;
+            vis[i]=0;
         }
-        visited[index]=0;
-        cur_sum-=nums[index];
+        vis[idx]=0;
+        cur-=v[idx];
         return 0;
-        
     }
     bool makesquare(vector<int>& matchsticks) {
         int sum=0;
@@ -39,6 +36,6 @@ public:
         if(matchsticks[0]>side)return 0;
         int k=4,n=matchsticks.size();
         vector<bool> vis(n,0);
-        return solve(matchsticks,vis,0,side,3,0);
+        return solve(matchsticks,0,vis,side,k,0);
     }
 };
