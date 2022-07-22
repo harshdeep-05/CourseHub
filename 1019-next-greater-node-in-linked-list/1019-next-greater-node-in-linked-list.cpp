@@ -12,19 +12,21 @@ class Solution {
 public:
     vector<int> nextLargerNodes(ListNode* head) {
         vector<int> ans;
-        ListNode* temp=head;
-        while(temp)
+        stack<pair<int,int>> s;
+        int index=0;
+        while(head)
         {
-            int x=temp->val;
-            ListNode* temp2=temp;
-            while(temp2 && temp2->val<=x)
+            while(!s.empty() && head->val>s.top().first)
             {
-                temp2=temp2->next;
+                ans[s.top().second]=head->val;
+                s.pop();
             }
-            if(temp2==NULL)ans.push_back(0);
-            else ans.push_back(temp2->val);
-            temp=temp->next;
+            ans.push_back(0);
+            s.push({head->val,index});
+            head=head->next;
+            index++;
         }
         return ans;
+        
     }
 };
