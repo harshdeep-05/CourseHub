@@ -9,21 +9,16 @@
  */
 class Solution {
 public:
-    TreeNode* ans;
-    bool solve(TreeNode* root, TreeNode* p, TreeNode* q)
-    {
-        if(!root)return 0;
-        int l=solve(root->left,p,q);
-        int r=solve(root->right,p,q);
-        
-        int m=(root==p || root==q);
-        if(l+r+m>=2)ans=root;
-        
-        return (l+r+m>0);
-        
-    }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        solve(root,p,q);
-        return ans;
+        if(!root || root==p || root==q)
+            return root;
+        
+        auto l=lowestCommonAncestor(root->left,p,q);
+        auto r=lowestCommonAncestor(root->right,p,q);
+        
+        if(l==NULL)return r;
+        if(r==NULL)return l;
+        
+        return root;
     }
 };
