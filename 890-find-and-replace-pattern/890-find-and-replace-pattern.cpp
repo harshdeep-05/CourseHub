@@ -2,26 +2,29 @@ class Solution {
 public:
     vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
         vector<string> ans;
-        int c=0;
-        string p="";
-        unordered_map<char,int> m;
-        for(auto i:pattern)
-            {
-                if(m.find(i)==m.end())m[i]=c++;
-                p+='0'+m[i];
-            }
         for(auto s:words)
         {
-            int c=0;
-            string x="";
-            unordered_map<char,int> m;
-            for(auto i:s)
+            unordered_map<char,char> m,n;
+            int flag=1;
+            for(int i=0;i<s.size();i++)
             {
-                if(m.find(i)==m.end())m[i]=c++;
-                x+='0'+m[i];
+                
+                if(m.find(pattern[i])==m.end() && n.find(s[i])==m.end())
+                {
+                    m[pattern[i]]=s[i];
+                    n[s[i]]=pattern[i];
+                }
+                else
+                {
+                    if(m[pattern[i]]!=s[i] || n[s[i]]!=pattern[i])
+                    {
+                        flag=0;
+                        break;
+                    }
+                }
+                
             }
-            
-            if(x==p)ans.push_back(s);
+            if(flag)ans.push_back(s);
         }
         return ans;
     }
