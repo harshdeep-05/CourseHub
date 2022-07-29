@@ -5,13 +5,11 @@ public:
         while(end<n)
         {
             sum+=nums[end];
-            if(sum*(end-start+1)<k)ans+=end-start+1;
-            while(start<=end && sum*(end-start+1)>=k)
+            while(sum*(end-start+1)>=k)
             {
-                sum-=nums[start];
-                start++;
-                if(sum*(end-start+1)<k)ans+=end-start+1;
+                sum-=nums[start++];
             }
+            ans+=end-start+1;
             end++;
         }
         return ans;
