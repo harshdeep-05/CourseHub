@@ -7,20 +7,17 @@ public:
         for(int i=0;i<n;i++)
         {
             int x=__gcd(nums[i],k);
+            int y=k/x;
+            if(y==1)ans+=i;
+            else
+            {
+                for(auto j:m)
+                {
+                    if(j.first%y==0)ans+=j.second;
+                }
+            }
             m[x]++;
         }
-        for(auto i:m)
-        {
-            for(auto j:m)
-            {
-                if((i.first*j.first)%k)continue;
-                
-                if(i.first==j.first)
-                    ans+=(i.second-1)*(j.second);
-                else 
-                    ans+=(i.second)*(j.second);
-            }
-        }
-        return ans/2;
+        return ans;
     }
 };
