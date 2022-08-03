@@ -6,14 +6,13 @@ public:
     }
     
     bool book(int start, int end) {
-        for(auto i:m)
+        auto x=m.upper_bound(start);
+        if(x==m.end() || x->second>=end)
         {
-            int x=i.first,y=i.second;
-            if(x<end && y>start)
-                return false;
+            m[end]=start;
+            return true;
         }
-        m[start]=end;
-        return true;
+        return false;
     }
 };
 
