@@ -14,14 +14,15 @@ public:
     bool isUnivalTree(TreeNode* root) {
         if(!root)return 1;
         int val=root->val;
-        queue<TreeNode*> q;
+        stack<TreeNode*> q;
         q.push(root);
         while(!q.empty())
         {
             int n=q.size();
             while(n--)
             {
-                auto node=q.front();
+                auto node=q.top();
+                cout<<node<<" ";
                 q.pop();
                 if(node->val!=val)return 0;
                 
