@@ -21,26 +21,30 @@
  */
 class Solution {
 public:
-    TreeNode* solve(vector<int>&v,int l,int r)
+    TreeNode* solve(ListNode* head)
     {
-        if(l>r)return NULL;
+        if(!head)return NULL;
+        if(!head->next)
+            return new TreeNode(head->val);
         
-        int m=l+(r-l)/2;
-        TreeNode* root=new TreeNode(v[m]);
-        root->left=solve(v,l,m-1);
-        root->right=solve(v,m+1,r);
-        return root;
+        auto slow=head,fast=head;
+        auto premid=head;
+        while(fast && fast->next)
+        {
+            premid=slow;
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        premid->next=NULL;
+        TreeNode* node=new TreeNode(slow->val);
+        
+        node->left=solve(head);
+        node->right=solve(slow->next);
+        
+        return node;
     }
     TreeNode* sortedListToBST(ListNode* head) {
-        if(!head)return NULL;
-        vector<int> v;
-        auto temp=head;
-        while(temp)
-        {
-            v.push_back(temp->val);
-            temp=temp->next;
-        }
-        int n=v.size();
-        return solve(v,0,n-1);
+        
+        return solve(head);
     }
 };
