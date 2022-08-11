@@ -4,31 +4,32 @@ public:
     int numFactoredBinaryTrees(vector<int>& arr) {
         int n=arr.size();
         sort(arr.begin(),arr.end());
-        unordered_map<int,int> m;
-        for(int i=0;i<n;i++)
-            m[arr[i]]=i;
+        unordered_map<int,long> m;
+//         for(int i=0;i<n;i++)
+//             m[arr[i]]=i;
         
-        // sort(arr.begin(),arr.end());
-        
-        vector<long> dp(n,1);
+        int ans=0;
         for(int i=0;i<n;i++)
         {
+            m[arr[i]]+=1;
             for(int j=0;j<i;j++)
             {
                 if(arr[i]%arr[j])continue;
                 int x=arr[i]/arr[j];
                 if(m.find(x)==m.end())continue;
                 
-                dp[i]=(dp[i]+dp[j]*dp[m[x]])%mod;
-                
+                m[arr[i]]+=(m[x]*m[arr[j]])%mod;
+                m[arr[i]]%=mod;
             }
+            ans+=m[arr[i]];
+            ans%=mod;
         }
-        long ans=0;
-        for(auto i:dp)
-        {
-            ans=(ans+i)%mod;
-        }
-        return (int)ans%mod;
+        // long ans=0;
+        // for(auto i:dp)
+        // {
+        //     ans=(ans+i)%mod;
+        // }
+        return ans;
     }
     
 };
