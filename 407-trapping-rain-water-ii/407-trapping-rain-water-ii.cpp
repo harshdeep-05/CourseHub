@@ -3,9 +3,7 @@ public:
     int trapRainWater(vector<vector<int>>& h) {
         int m=h.size(),n=h[0].size();
         // priority_queue<vector<int>> q;
-        auto comp = [&](const array<int, 3>& a, const array<int, 3>& b) { return a[0] >= b[0]; };
-        
-        priority_queue<array<int, 3>, vector<array<int, 3>>, decltype(comp)> q(comp);
+        priority_queue< vector<int>, vector<vector<int>>, greater<vector<int>>> q;
         
         int d[5]={1,0,-1,0,1};
         bool vis[m][n];
