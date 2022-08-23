@@ -1,47 +1,54 @@
 class NumArray {
-    vector<int> v,dec;
-    int len;
+    vector<int> tree;
+    int n;
 public:
+    void buildTree(vector<int>& nums)
+    {
+        for(int i=n,j=0;i<2*n;i++,j++)
+            tree[i]=nums[j];
+        for(int i=n-1;i>0;i--)
+            tree[i]=tree[i*2]+tree[i*2+1];
+    }
     NumArray(vector<int>& nums) {
-        v=nums;
-        double l=sqrt(nums.size());
-        len=(int) ceil(nums.size()/l);
-        dec=vector<int> (len);
-        for(int i=0;i<nums.size();i++)
-        {
-            dec[i/len]+=nums[i];
-        }
-            
+        n=nums.size();
+        tree=vector<int> (2*n);
+        buildTree(nums);
     }
     
     void update(int index, int val) {
-        int i=index/len;
-        dec[i]=dec[i]-v[index]+val;
-        v[index]=val;
+        index+=n;
+        tree[index]=val;
+        while(index)
+        {
+            int left=index,right=index;
+            if(index%2==0)right=index+1;
+            else left=index-1;
+            tree[index/2]=tree[left]+tree[right];
+            index/=2;
+        }
+        return;
+        
     }
     
     int sumRange(int left, int right) {
-        int sum=0,start=left/len,end=right/len;
+        left+=n;
+        right+=n;
         
-        if(start==end)
+        int sum=0;
+        while(left<=right)
         {
-            for(int k=left;k<=right;k++)sum+=v[k];
-        }
-        else
-        {
-            for(int k=left;k<(start+1)*len;k++)
+            if(left%2)
             {
-                sum+=v[k];
+                sum+=tree[left];
+                left++;
             }
-            for(int k=start+1;k<end;k++)
+            if(right%2==0)
             {
-                sum+=dec[k];
+                sum+=tree[right];
+                right--;
             }
-            for(int k=end*len;k<=right;k++)
-            {
-                sum+=v[k];
-            }
-            
+            left/=2;
+            right/=2;
         }
         return sum;
     }
