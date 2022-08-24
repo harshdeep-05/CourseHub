@@ -5,7 +5,7 @@ public:
     {
         if(i==arr.size())return 0;
         if(dp[i][j][flag]!=-1)return dp[i][j][flag];
-        while(j<v.size() && v[j]<=prev)j++;
+        j=upper_bound(v.begin(),v.end(),prev)-v.begin();
         
         if(arr[i]<=prev && j==v.size())return INT_MAX-1;
        
