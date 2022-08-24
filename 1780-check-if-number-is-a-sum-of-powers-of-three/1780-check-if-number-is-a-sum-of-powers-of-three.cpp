@@ -7,13 +7,19 @@ public:
         return (solve(n-v[i],i-1,v) or solve(n,i-1,v));
     }
     bool checkPowersOfThree(int n) {
-        vector<int> num;
-        int i=1;
-        while(i<=n)
+        // vector<int> num;
+        // int i=1;
+        // while(i<=n)
+        // {
+        //     num.push_back(i);
+        //     i*=3;
+        // }
+        // return solve(n,num.size()-1,num);
+        while(n)
         {
-            num.push_back(i);
-            i*=3;
+            if(n%3==2)return 0;
+            n/=3;
         }
-        return solve(n,num.size()-1,num);
+        return 1;
     }
 };
