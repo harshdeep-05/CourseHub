@@ -3,19 +3,11 @@ public:
     // int dp[2001][2001];
     bool pal(string &s,int i,int j,vector<vector<int>> &dp)
     {
+        if(i>=j)return 1;
         if(dp[i][j]!=-1)return dp[i][j];
-        bool ans=1;
-        int l=i,r=j;
-        while(l<r)
-        {
-            if(s[l]!=s[r])
-            {
-                ans=0;
-                break;
-            }
-            l++;r--;
-        }
-        return dp[i][j]=ans;
+        if(s[i]==s[j])
+            return dp[i][j]=pal(s,i+1,j-1,dp);
+        return 0;
     }
     bool checkPartitioning(string s) {
         int n=s.size();
