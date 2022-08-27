@@ -2,28 +2,21 @@ class Solution {
 public:
     int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {
         int m=matrix.size(),n=matrix[0].size();
-        int dp[m+1][n];
-        memset(dp,0,sizeof dp);
-        for(int i=0;i<m;i++)
-        {
-            for(int j=0;j<n;j++)
-            {
-                dp[i+1][j]=dp[i][j]+matrix[i][j];
-            }
-        }
         int ans=INT_MIN;
-        for(int i=0;i<m;i++)
+        for(int j=0;j<n;j++)
         {
-            for(int l=i+1;l<=m;l++)
+            vector<int> pre_row(m,0);
+            for(int r=j;r<n;r++)
             {
-                for(int j=0;j<n;j++)
+                for(int i=0;i<m;i++)pre_row[i]+=matrix[i][r];
+                for(int i=0;i<m;i++)
                 {
-                    int val=0;
-                    for(int r=j;r<n;r++)
+                    int sum=0;
+                    for(int l=i;l<m;l++)
                     {
-                        val+=dp[l][r]-dp[i][r];
-                        if(val==k)return k;
-                        if(val<k)ans=max(ans,val);
+                        sum+=pre_row[l];
+                        if(sum==k)return k;
+                        if(sum<k)ans=max(ans,sum);
                     }
                 }
             }
