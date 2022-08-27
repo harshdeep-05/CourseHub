@@ -15,6 +15,7 @@ public:
         vector<int> v=count(n);
         for(int i=0;i<31;i++)
         {
+            //cout<<(1<<i)<<"\n";
             if(v==count(1<<i))return true;
         }
         return false;
