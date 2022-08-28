@@ -2,32 +2,21 @@ class Solution {
 public:
     vector<vector<int>> diagonalSort(vector<vector<int>>& mat) {
         int m=mat.size(),n=mat[0].size();
-        for(int row=0;row<m;row++)
+        unordered_map<int,priority_queue<int>> q;
+        for(int i=0;i<m;i++)
         {
-            int i=row,j=0;
-            priority_queue<int> q;
-            while(i<m && j<n)
+            for(int j=0;j<n;j++)
             {
-                q.push(mat[i++][j++]);
-            }
-            while(!q.empty())
-            {
-                mat[--i][--j]=q.top();
-                q.pop();
+                q[i-j].push(-mat[i][j]);
             }
         }
-        for(int col=1;col<n;col++)
+        for(int i=0;i<m;i++)
         {
-            int i=0,j=col;
-            priority_queue<int> q;
-            while(i<m && j<n)
+            for(int j=0;j<n;j++)
             {
-                q.push(mat[i++][j++]);
-            }
-            while(!q.empty())
-            {
-                mat[--i][--j]=q.top();
-                q.pop();
+                int x=-q[i-j].top();
+                q[i-j].pop();
+                mat[i][j]=x;
             }
         }
         return mat;
