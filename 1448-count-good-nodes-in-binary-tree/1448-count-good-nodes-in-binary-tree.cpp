@@ -14,11 +14,10 @@ public:
     int ans=0;
     void solve(TreeNode* root,int mx)
     {
-        if(!root)return;
-        
-        if(root->val >= mx)ans++;
-        mx=max(root->val,mx);
-        
+        if(!root )
+            return ;
+        if(root->val>=mx)ans++;
+        mx=max(mx,root->val);
         solve(root->left,mx);
         solve(root->right,mx);
         return;
