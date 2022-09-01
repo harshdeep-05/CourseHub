@@ -1,37 +1,40 @@
 class Solution {
 public:
-    // int f[26];
-    vector<int> ans;
-    vector<int> solve(vector<vector<int>>& graph,string &labels,int node,vector<bool>&vis)
-    {
-        vector<int> f(26,0); 
-        vis[node]=1;
-        for(auto x:graph[node])
-        {
-            if(!vis[x])
-            {
-                vector<int> tmp=solve(graph,labels,x,vis);
-                for(int i=0;i<26;i++)
-                    f[i]+=tmp[i];
-            }
-        }
-        
-        f[labels[node]-'a']++;
-        ans[node]=f[labels[node]-'a'];            
-        return f;
-        
-        
-    }
     vector<int> countSubTrees(int n, vector<vector<int>>& edges, string labels) {
-        vector<vector<int>> graph(n);
-        ans=vector<int> (n,1);
-        for(auto i:edges)
-        {
-            graph[i[0]].push_back(i[1]);
-            graph[i[1]].push_back(i[0]);
+	    // build fast-lookup table
+        vector<vector<int>> neighbors(n);
+        for (auto &edge : edges) {
+            neighbors[edge[0]].push_back(edge[1]);
+            neighbors[edge[1]].push_back(edge[0]);
         }
-        vector<bool> vis(n,0);
-        solve(graph,labels,0,vis);
-        return ans;
+        
+		// dfs
+        vector<int> result(n);
+        int table[26] = { 0 };
+        dfs(result, 0, -1, neighbors, labels, table);
+        
+        return result;
+    }
+    
+    void dfs(
+        vector<int> &result,
+        int i, 
+        int from, 
+        vector<vector<int>> &neighbors, 
+        string &label, 
+        int table[]) {
+        
+        for (int next : neighbors[i]) {
+            if (next == from) continue;
+            
+            int temp[26] = { 0 };
+            dfs(result, next, i, neighbors, label, temp);
+            
+            for (int i = 0; i < 26; ++i) table[i] += temp[i];
+        }
+        
+        const char c = label[i];
+        table[c - 'a']++;
+        result[i] = table[c - 'a'];
     }
 };
