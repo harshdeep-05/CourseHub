@@ -30,8 +30,18 @@ public:
         return l+r+root->val;
     }
     TreeNode* pruneTree(TreeNode* root) {
-        solve(root,0);
-        if(root->val==0 && !root->left && !root->right)return NULL;
+        // solve(root,0);
+        // if(root->val==0 && !root->left && !root->right)return NULL;
+        // return root;
+        if(!root)
+            return root;
+        
+        root->left=pruneTree(root->left);
+        root->right=pruneTree(root->right);
+        
+        if(root->val==0 && !root->left && !root->right)
+            root=NULL;
+        
         return root;
     }
 };
