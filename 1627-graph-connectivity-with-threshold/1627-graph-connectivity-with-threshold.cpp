@@ -1,8 +1,12 @@
-class Solution {
+class DSU{
+private:
+    vector<int> par,rank;
 public:
-    int N;
-    vector<int> par;
-    vector<int> rank;
+    DSU(int n){
+        par=vector<int> (n,0);
+        for(int i=0;i<n;i++)par[i]=i;
+        rank=vector<int> (n,1);
+    }
     int find(int x)
     {
         if(par[x]==x)
@@ -18,49 +22,31 @@ public:
         
         if(x==y)return;
         
-        if(rank[x]>rank[y])
-        {
-            par[y]=x;
-        }
-        else if(rank[y]>rank[x])
-        {
-            par[x]=y;
-        }
-        else
-        {
-            par[x]=y;
-            rank[y]++;
-        }
+        if(rank[x]<rank[y])swap(x,y);
+        
+        par[y]=x;
+        rank[x]+=rank[y];
     }
+};
+
+class Solution {
+public:
     vector<bool> areConnected(int n, int threshold, vector<vector<int>>& queries) {
         vector<bool> ans(queries.size(),0);
-        N=n+1;
-        par=vector<int> (N);
-        rank=vector<int> (N,0);
-        for(int i=1;i<=n;i++)
-        {
-            par[i]=i;
-        }
+        DSU dsu(n+1);
         for(int i=threshold+1;i<=n;i++)
         {
-            for(int j=1;j*i<=n;j++)
+            for(int j=i*2;j<=n;j+=i)
             {
-                if(j*i <= n && (j+1)*i <= n )
-                    unionof(j*i, (j+1)*i);
+                dsu.unionof(i,j);
             }
-        }
-        
-        for(int i=1;i<=n;i++)
-        {
-            find(i);
         }
         int i=0;
         for(auto v:queries)
         {
             int x=v[0],y=v[1];
-            if(par[x]==par[y])
+            if(dsu.find(x)==dsu.find(y))
                 ans[i]=true;
-            
             i++;
         }
         return ans;
