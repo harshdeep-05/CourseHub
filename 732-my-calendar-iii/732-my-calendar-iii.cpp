@@ -1,22 +1,44 @@
 class MyCalendarThree {
 private:    
-    map<int,int> m;
+    unordered_map<int,int> arr,tree;
 public:
     MyCalendarThree() {
         
     }
     
-    int book(int start, int end) {
-        m[start]++;
-        m[end]--;
-        // auto it=m.begin()+1;
-        int cur=0,ans=0;
-        for(auto it:m)
+    void query(int l,int r,int start,int end,int node)
+    {
+        if(start>r || end<l)return;
+        if(l>=start && r<=end)
         {
-            cur+=it.second;
-            ans=max(cur,ans);
+            tree[node]++;
+            arr[node]++;
         }
-        return ans;
+        else
+        {
+            int mid=l+(r-l)/2;
+            query(l,mid,start,end,node*2);
+            query(mid+1,r,start,end,node*2+1);
+            
+            tree[node]=arr[node]+max(tree[node*2],tree[node*2+1]);
+        }
+        return;
+    }
+    
+    int book(int start, int end) {
+        // m[start]++;
+        // m[end]--;
+        // // auto it=m.begin()+1;
+        // int cur=0,ans=0;
+        // for(auto it:m)
+        // {
+        //     cur+=it.second;
+        //     ans=max(cur,ans);
+        // }
+        // return ans;
+        
+        query(1,1e9,start,end-1,1);
+        return tree[1];
     }
 };
 
