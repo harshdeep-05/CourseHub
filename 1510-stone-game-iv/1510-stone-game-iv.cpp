@@ -1,23 +1,18 @@
 class Solution {
 public:
-    vector<int> dp;
-    bool solve(int n)
-    {
-        if(dp[n]!=-1)
-            return dp[n];
-        
-        for(int i=sqrt(n);i>=1;i--)
+    bool winnerSquareGame(int n) {
+        vector<bool> dp(n+1,0);
+        for(int i=1;i<=n;i++)
         {
-            if(!solve(n-i*i))
+            for(int j=1;j*j<=i;j++)
             {
-                return dp[n]=1;
+                if(dp[i-j*j]==0)
+                {
+                    dp[i]=1;
+                    break;
+                }
             }
         }
-        return dp[n]=0;
-    }
-    bool winnerSquareGame(int n) {
-        dp=vector<int> (n+1,-1);
-        dp[0]=0;
-        return solve(n);
+        return dp[n];
     }
 };
